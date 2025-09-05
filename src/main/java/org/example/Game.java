@@ -1,27 +1,17 @@
 package org.example;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Game {
-    private final List<Player> players = new ArrayList<>();
+    private Map<String, Player> players = new HashMap<>();
 
     public void register(Player player) {
-        players.add(player);
+        players.put(player.getName(), player);
     }
 
-    private Player findByName(String name) {
-        for (Player p : players) {
-            if (p.getName().equals(name)) {
-                return p;
-            }
-        }
-        return null;
-    }
-
-    // Возвращает 0 - ничья, 1 - выиграл первый игрок, 2 - выиграл второй
     public int round(String playerName1, String playerName2) {
-        Player player1 = findByName(playerName1);
-        Player player2 = findByName(playerName2);
+        Player player1 = players.get(playerName1);
+        Player player2 = players.get(playerName2);
 
         if (player1 == null) {
             throw new NotRegisteredException("Игрок " + playerName1 + " не зарегистрирован");
@@ -39,4 +29,5 @@ public class Game {
         }
     }
 }
+
 
